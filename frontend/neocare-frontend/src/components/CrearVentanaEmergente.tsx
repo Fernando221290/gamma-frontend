@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { apiBaseURL } from "../utils/config";
 import "./CrearVentanaEmergente.css";
 
 /* =========================================================
    CONSTANTES
    ========================================================= */
 const MAX_TITLE_LENGTH = 80;
-const API_BASE = "http://127.0.0.1:8000";
 const LABEL_COLORS = ["blue", "red", "green", "yellow"];
 
 /* =========================================================
@@ -83,10 +83,10 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasError("");
     try {
       const [labelsRes, subtasksRes] = await Promise.all([
-        fetch(`${API_BASE}/cards/${cardId}/labels`, {
+        fetch(`${apiBaseURL}/cards/${cardId}/labels`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${API_BASE}/cards/${cardId}/subtasks`, {
+        fetch(`${apiBaseURL}/cards/${cardId}/subtasks`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -120,7 +120,7 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasLoading(true);
     setExtrasError("");
     try {
-      const res = await fetch(`${API_BASE}/cards/${cardInicial.id}/labels`, {
+      const res = await fetch(`${apiBaseURL}/cards/${cardInicial.id}/labels`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,7 +149,7 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasLoading(true);
     setExtrasError("");
     try {
-      const res = await fetch(`${API_BASE}/labels/${labelId}`, {
+      const res = await fetch(`${apiBaseURL}/labels/${labelId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -179,7 +179,7 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasLoading(true);
     setExtrasError("");
     try {
-      const res = await fetch(`${API_BASE}/cards/${cardInicial.id}/subtasks`, {
+      const res = await fetch(`${apiBaseURL}/cards/${cardInicial.id}/subtasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +208,7 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasLoading(true);
     setExtrasError("");
     try {
-      const res = await fetch(`${API_BASE}/subtasks/${subtask.id}`, {
+      const res = await fetch(`${apiBaseURL}/subtasks/${subtask.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -236,7 +236,7 @@ const CrearVentanaEmergente: React.FC<Props> = ({
     setExtrasLoading(true);
     setExtrasError("");
     try {
-      const res = await fetch(`${API_BASE}/subtasks/${subtaskId}`, {
+      const res = await fetch(`${apiBaseURL}/subtasks/${subtaskId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -8,6 +8,9 @@ import Sidebar from "../components/Sidebar"; // Menú lateral
 import CrearVentanaEmergente from "../components/CrearVentanaEmergente";
 import CardItem from "../components/CardItem";
 
+// Configuración de la API
+import { apiBaseURL } from "../utils/config";
+
 // ✅ Modal de horas
 import WorklogsModal from "../components/WorklogsModal";
 
@@ -95,7 +98,7 @@ const Boards: React.FC = () => {
       }
 
       try {
-        const userResponse = await fetch("http://127.0.0.1:8000/auth/me", {
+        const userResponse = await fetch(`${apiBaseURL}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -108,7 +111,7 @@ const Boards: React.FC = () => {
         const userData = await userResponse.json();
         setUser(userData);
 
-        const boardsResponse = await fetch("http://127.0.0.1:8000/boards/", {
+        const boardsResponse = await fetch(`${apiBaseURL}/boards/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -147,7 +150,7 @@ const Boards: React.FC = () => {
 
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/lists/?board_id=${boardId}`,
+          `${apiBaseURL}/lists/?board_id=${boardId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -184,7 +187,7 @@ const Boards: React.FC = () => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://127.0.0.1:8000/cards/?board_id=${boardId}`,
+      `${apiBaseURL}/cards/?board_id=${boardId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -347,7 +350,7 @@ const Boards: React.FC = () => {
       );
 
       try {
-        const res = await fetch(`http://127.0.0.1:8000/cards/${activeCardId}`, {
+        const res = await fetch(`${apiBaseURL}/cards/${activeCardId}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -492,7 +495,7 @@ const Boards: React.FC = () => {
                     const token = localStorage.getItem("token");
 
                     const res = await fetch(
-                      `http://127.0.0.1:8000/cards/${id}`,
+                      `${apiBaseURL}/cards/${id}`,
                       {
                         method: "DELETE",
                         headers: {
@@ -548,7 +551,7 @@ const Boards: React.FC = () => {
     // =========================
     if (cardEditando) {
       const res = await fetch(
-        `http://127.0.0.1:8000/cards/${cardEditando.id}`,
+        `${apiBaseURL}/cards/${cardEditando.id}`,
         {
           method: "PATCH",
           headers: {
@@ -578,7 +581,7 @@ const Boards: React.FC = () => {
         return;
       }
 
-      const res = await fetch("http://127.0.0.1:8000/cards/", {
+      const res = await fetch(`${apiBaseURL}/cards/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -614,7 +617,7 @@ const Boards: React.FC = () => {
         onSaved={reloadCards}
         card={worklogsCard}
         currentUser={user}
-        apiBaseUrl="http://127.0.0.1:8000"
+        apiBaseUrl={apiBaseURL}
       />
     </div>
   );

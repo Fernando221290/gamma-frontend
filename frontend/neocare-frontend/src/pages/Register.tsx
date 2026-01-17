@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 // Imagen de fondo para mantener coherencia visual con Login
 import fondo from "../assets/fondo.jpg";
 
+// Configuración de la API
+import { apiBaseURL } from "../utils/config";
+
 // Estilos (reutilizamos los del login)
 import "./login.css";
 
@@ -28,7 +31,7 @@ const Register: React.FC = () => {
       // ------------------------------------------------------------
       // 1️⃣ Registrar usuario en FastAPI
       // ------------------------------------------------------------
-      const response = await fetch("http://127.0.0.1:8000/auth/register", {
+      const response = await fetch(`${apiBaseURL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -48,7 +51,7 @@ const Register: React.FC = () => {
       formData.append("username", email);
       formData.append("password", password);
 
-      const loginRes = await fetch("http://127.0.0.1:8000/auth/login", {
+      const loginRes = await fetch(`${apiBaseURL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData.toString(),

@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 // Imagen de fondo para la pantalla de login
 import fondo from "../assets/fondo.jpg";
 
+// Configuración de la API
+import { apiBaseURL } from "../utils/config";
+
 // Estilos específicos de la página de login
 import "./login.css";
 
@@ -36,7 +39,7 @@ const Login: React.FC = () => {
       formData.append("password", password);
 
       // Petición al backend
-      const response = await fetch("http://127.0.0.1:8000/auth/login", {
+      const response = await fetch(`${apiBaseURL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/Header";
+import { apiBaseURL } from "../utils/config";
 import "./Report.css";
 
 type SummaryCard = {
@@ -39,8 +40,6 @@ type ListItem = {
   id: number;
   name: string;
 };
-
-const API_BASE = "http://127.0.0.1:8000";
 
 function getCurrentISOWeek(): string {
   // Calcula la semana ISO (YYYY-WW) para el selector por defecto
@@ -95,10 +94,10 @@ const Report: React.FC = () => {
 
     try {
       const [userRes, boardsRes] = await Promise.all([
-        fetch(`${API_BASE}/auth/me`, {
+        fetch(`${apiBaseURL}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${API_BASE}/boards/`, {
+        fetch(`${apiBaseURL}/boards/`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -129,7 +128,7 @@ const Report: React.FC = () => {
   const fetchLists = async (board: number, token: string) => {
     // Carga nombres de listas para mostrar el estado en resumen
     try {
-      const res = await fetch(`${API_BASE}/lists/?board_id=${board}`, {
+      const res = await fetch(`${apiBaseURL}/lists/?board_id=${board}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) return;
@@ -158,13 +157,13 @@ const Report: React.FC = () => {
 
     try {
       const [summaryRes, usersRes, cardsRes] = await Promise.all([
-        fetch(`${API_BASE}/report/${boardId}/summary?week=${week}`, {
+        fetch(`${apiBaseURL}/report/${boardId}/summary?week=${week}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${API_BASE}/report/${boardId}/hours-by-user?week=${week}`, {
+        fetch(`${apiBaseURL}/report/${boardId}/hours-by-user?week=${week}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${API_BASE}/report/${boardId}/hours-by-card?week=${week}`, {
+        fetch(`${apiBaseURL}/report/${boardId}/hours-by-card?week=${week}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
